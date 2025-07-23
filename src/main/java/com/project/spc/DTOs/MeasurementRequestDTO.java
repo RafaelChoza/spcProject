@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -13,6 +14,7 @@ public class MeasurementRequestDTO {
     private String partNumber;
     private String workOrder;
     private String operator;
+    private LocalDateTime measurementTime;
     private List<MeasuredValueDTO> measurements;
 
 

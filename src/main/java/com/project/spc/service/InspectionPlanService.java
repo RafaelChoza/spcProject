@@ -10,7 +10,6 @@ import com.project.spc.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.util.List;
 
 @Service
@@ -29,7 +28,7 @@ public class InspectionPlanService {
         Part part = partRepository.findById(dto.getPartNumber())
                 .orElseThrow(() -> new RuntimeException("No se encuentra el numero de parte"));
 
-        InspectionPlan plan =  new InspectionPlan();
+        InspectionPlan plan = new InspectionPlan();
         plan.setPart(part);
         plan.setVersion(dto.getVersion());
 
@@ -39,10 +38,31 @@ public class InspectionPlanService {
             dim.setLowerLimit(d.getLowerLimit());
             dim.setUpperLimit(d.getUpperLimit());
             dim.setPlan(plan);
-            return  dim;
+            return dim;
         }).toList();
 
         plan.setDimensions(dimensions);
         return inspectionPlanRepository.save(plan);
     }
+
+    public List<InspectionPlanDto> getAllInspectionPlans() {
+        List<InspectionPlan> allInspectionPlans = inspectionPlanRepository.findAll();
+
+        return allInspectionPlans.stream().map((InspectionPlan plan) -> {
+            InspectionPlanDto dto = new InspectionPlanDto();
+            dto.setVersion(plan.getVersion());
+            dto.setPartNumber(plan.getPart().getPartNumber());
+
+            List<InspectionPlanDto.DimensionDTO> dimensionDtos = plan.getDimensions().stream()
+                    .map((InspectionDimension dim) -> new InspectionPlanDto.DimensionDTO(
+                            dim.getName(),
+                            dim.getLowerLimit(),
+                            dim.getUpperLimit()))
+                    .toList();
+
+            dto.setDimensions(dimensionDtos);
+            return dto;
+        }).toList();
+    }
+
 }

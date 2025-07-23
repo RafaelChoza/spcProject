@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "measurement")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,14 +17,14 @@ public class Measurement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double value;
+    private Double measuredValue;
 
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private LocalDateTime measurementTime = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "dimension_id")
     private InspectionDimension specification;
 
-    private String Operator;
+    private String operator;
     private String workOrder;
 }
