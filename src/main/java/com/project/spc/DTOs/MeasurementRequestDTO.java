@@ -9,18 +9,19 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InspectionPlanDto {
+public class MeasurementRequestDTO {
     private String partNumber;
-    private String version;
-    private List<DimensionDTO> dimensions;
+    private String workOrder;
+    private String operator;
+    private List<MeasuredValueDTO> measurements;
+
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class DimensionDTO {
-        private String name;
-        private Double lowerLimit;
-        private Double upperLimit;
-
+    public static class MeasuredValueDTO {
+        private String dimensionName; // ejemplo: "Diámetro"
+        private Double value;
     }
 }
+
