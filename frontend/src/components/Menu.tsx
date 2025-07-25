@@ -43,7 +43,7 @@ export default function Menu() {
         <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm text-center hover:shadow-xl transition-shadow duration-300">
           <button
             className="bg-green-500 hover:bg-green-600 text-white font-semibold text-xl py-6 px-4 rounded-lg w-full transition-transform transform hover:scale-105"
-            onClick={() => handleNavigate("/create_part_number")}
+            onClick={() => handleNavigate("/inspection_plan")}
           >
             Realizar Inspección
           </button>

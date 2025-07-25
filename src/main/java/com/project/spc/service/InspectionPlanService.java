@@ -65,4 +65,27 @@ public class InspectionPlanService {
         }).toList();
     }
 
+    public InspectionPlanDto getInspectionPlanByPartNumber(String partNumber) {
+    InspectionPlan inspectionPlan = inspectionPlanRepository.findByPartNumber(partNumber)
+        .orElseThrow(() -> new RuntimeException("El número de parte " + partNumber + " no existe"));
+
+    InspectionPlanDto inspPlanDto = new InspectionPlanDto();
+    inspPlanDto.setPartNumber(inspectionPlan.getPart().getPartNumber());
+    inspPlanDto.setVersion(inspectionPlan.getVersion());
+
+    // Mapear dimensiones
+    List<InspectionPlanDto.DimensionDTO> dimensionDTOs = inspectionPlan.getDimensions().stream()
+        .map(dim -> new InspectionPlanDto.DimensionDTO(
+            dim.getName(),
+            dim.getLowerLimit(),
+            dim.getUpperLimit()
+        )).toList();
+
+    inspPlanDto.setDimensions(dimensionDTOs);
+
+    return inspPlanDto;
+}
+
+    
+
 }
